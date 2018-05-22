@@ -11,5 +11,8 @@ setup(
 	author_email='luislpatino@gmail.com',
 	license='GPLv3',
 	packages=find_packages(),
-	python_requires='>=3'
+	python_requires='>=3',
+	install_requires=[
+		'appdirs>=1.4.3'
+	]
 )
