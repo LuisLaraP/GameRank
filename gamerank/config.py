@@ -6,12 +6,12 @@ import appdirs
 
 
 appName = 'GameRank'
+configFilename = appdirs.user_config_dir(appName) + '/GameRank.cfg'
 
 
 def createConfig():
 	"""Create a default configuration file."""
-	path = appdirs.user_config_dir(appName) + '/GameRank.cfg'
-	open(path, 'a').close()
+	open(configFilename, 'a').close()
 
 
 def databasePath():
@@ -21,7 +21,6 @@ def databasePath():
 
 def readConfig():
 	"""Read the configuration file and return the parsed contents."""
-	path = appdirs.user_config_dir(appName) + '/GameRank.cfg'
 	config = configparser.ConfigParser()
-	config.read(path)
+	config.read(configFilename)
 	return config
