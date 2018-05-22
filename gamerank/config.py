@@ -8,6 +8,12 @@ import appdirs
 appName = 'GameRank'
 
 
+def createConfig():
+	"""Create a default configuration file."""
+	path = appdirs.user_config_dir(appName) + '/GameRank.cfg'
+	open(path, 'a').close()
+
+
 def databasePath():
 	"""Return the absolute path to the root directory of the database."""
 	return appdirs.user_data_dir(appName) + '/database'
