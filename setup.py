@@ -13,6 +13,7 @@ setup(
 	packages=find_packages(),
 	python_requires='>=3',
 	install_requires=[
-		'appdirs>=1.4.3'
+		'appdirs>=1.4.3',
+		'igdb_api_python>=1'
 	]
 )
