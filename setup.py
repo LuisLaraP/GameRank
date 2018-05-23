@@ -15,5 +15,10 @@ setup(
 	install_requires=[
 		'appdirs>=1.4.3',
 		'igdb_api_python>=1'
-	]
+	],
+	entry_points={
+		'console_scripts': [
+			'dl-data = gamerank.database:download'
+		]
+	}
 )
