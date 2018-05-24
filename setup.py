@@ -19,7 +19,8 @@ setup(
 	entry_points={
 		'console_scripts': [
 			'dl-covers = gamerank.database:downloadCovers',
-			'dl-data = gamerank.database:download'
+			'dl-data = gamerank.database:download',
+			'split-db = gamerank.database:splitDatabase'
 		]
 	}
 )
