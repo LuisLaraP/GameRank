@@ -20,7 +20,7 @@ setup(
 		'console_scripts': [
 			'dl-covers = gamerank.database.download:downloadCovers',
 			'dl-data = gamerank.database.download:downloadData',
-			'split-db = gamerank.database:splitDatabase'
+			'split-db = gamerank.database.management:splitDatabase'
 		]
 	}
 )

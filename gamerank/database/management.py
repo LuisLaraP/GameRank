@@ -1,4 +1,4 @@
-"""Functions for accessing and modifying the database."""
+"""Functions for database management."""
 
 import json
 import os
