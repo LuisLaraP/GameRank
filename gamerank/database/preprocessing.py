@@ -62,16 +62,40 @@ def vectorizeSummaries():
 	vectorizer.set_params(vocabulary=vocab)
 	with open(cfg.databasePath() + '/Sets.json', 'r') as setsFile:
 		sets = json.load(setsFile)
-	trainIds = []
-	trainSums = []
+	ids = []
+	summaries = []
 	for id in sets['train']:
 		with open(cfg.databasePath() + '/Games/{}.json'.format(id), 'r') as inFile:
 			gameData = json.load(inFile)
 		if 'summary' in gameData:
-			trainIds.append(id)
-			trainSums.append(gameData['summary'])
-	vectorizer.fit(trainSums)
-	train = np.zeros((len(trainIds), 1 + len(vectorizer.get_feature_names())))
-	train[:, 0] = trainIds
-	train[:, 1:] = vectorizer.transform(trainSums).todense()
+			ids.append(id)
+			summaries.append(gameData['summary'])
+	vectorizer.fit(summaries)
+	train = np.zeros((len(ids), 1 + len(vectorizer.get_feature_names())))
+	train[:, 0] = ids
+	train[:, 1:] = vectorizer.transform(summaries).todense()
 	np.savetxt(cfg.databasePath() + '/trainSummaries.csv', train, fmt='%d')
+	ids = []
+	summaries = []
+	for id in sets['valid']:
+		with open(cfg.databasePath() + '/Games/{}.json'.format(id), 'r') as inFile:
+			gameData = json.load(inFile)
+		if 'summary' in gameData:
+			ids.append(id)
+			summaries.append(gameData['summary'])
+	valid = np.zeros((len(ids), 1 + len(vectorizer.get_feature_names())))
+	valid[:, 0] = ids
+	valid[:, 1:] = vectorizer.transform(summaries).todense()
+	np.savetxt(cfg.databasePath() + '/validSummaries.csv', valid, fmt='%d')
+	ids = []
+	summaries = []
+	for id in sets['test']:
+		with open(cfg.databasePath() + '/Games/{}.json'.format(id), 'r') as inFile:
+			gameData = json.load(inFile)
+		if 'summary' in gameData:
+			ids.append(id)
+			summaries.append(gameData['summary'])
+	test = np.zeros((len(ids), 1 + len(vectorizer.get_feature_names())))
+	test[:, 0] = ids
+	test[:, 1:] = vectorizer.transform(summaries).todense()
+	np.savetxt(cfg.databasePath() + '/testSummaries.csv', test, fmt='%d')
