@@ -10,6 +10,11 @@ appName = 'GameRank'
 configFilename = appdirs.user_config_dir(appName) + '/GameRank.cfg'
 
 
+def configPath():
+	"""Return the absolute path to the configuration directory."""
+	return appdirs.user_config_dir(appName)
+
+
 def createConfig():
 	"""Create a default configuration file."""
 	if not os.path.exists(appdirs.user_config_dir(appName)):

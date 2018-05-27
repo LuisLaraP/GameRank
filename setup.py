@@ -15,13 +15,16 @@ setup(
 	install_requires=[
 		'appdirs>=1.4.3',
 		'igdb_api_python>=1',
-		'numpy'
+		'numpy',
+		'scikit-learn',
+		'scipy'
 	],
 	entry_points={
 		'console_scripts': [
 			'dl-covers = gamerank.database.download:downloadCovers',
 			'dl-data = gamerank.database.download:downloadData',
 			'pp-data = gamerank.database.preprocessing:encodeData',
+			'pp-text = gamerank.database.preprocessing:vectorizeSummaries',
 			'split-db = gamerank.database.management:splitDatabase'
 		]
 	}
