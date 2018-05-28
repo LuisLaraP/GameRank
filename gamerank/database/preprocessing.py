@@ -23,15 +23,17 @@ def encodeData():
 		sets = json.load(setsFile)
 	for set in sets:
 		idList = sets[set]
-		data = np.zeros((len(idList), dim2), dtype=int)
+		data = np.zeros((len(idList), dim2 + 1), dtype=int)
+		data[:, 0] = idList
 		for i in range(len(idList)):
+			p = 1
 			gamePath = cfg.databasePath() + '/Games/{}.json'.format(idList[i])
 			with open(gamePath, 'r') as gameFile:
 				gameData = json.load(gameFile)
 			esrb = gameData['esrb']['rating'] if 'esrb' in gameData else 1
-			data[i, :len(esrbCode)] = \
+			data[i, p:p+len(esrbCode)] = \
 				[1 if esrb - 1 == i else 0 for i in range(len(esrbCode))]
-			p = len(esrbCode)
+			p += len(esrbCode)
 			modes = gameData['game_modes'] if 'game_modes' in gameData else []
 			data[i, p:p+len(modesCode)] = encodeMultiLabel(modes, modesCode)
 			p += len(modesCode)
