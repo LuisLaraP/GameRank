@@ -1,7 +1,6 @@
 """Functions for data preprocessing."""
 
 import json
-import os
 
 import numpy as np
 from sklearn.feature_extraction.text import CountVectorizer
@@ -41,7 +40,7 @@ def encodeData():
 			p += len(genresCode)
 			themes = gameData['themes'] if 'themes' in gameData else []
 			data[i, p:p+len(themesCode)] = encodeMultiLabel(themes, themesCode)
-		np.savetxt(cfg.databasePath() + '/{}.csv'.format(set), data, fmt='%d')
+		np.savetxt(cfg.databasePath() + '/{}_data.csv'.format(set), data, fmt='%d')
 
 
 def encodeMultiLabel(values, code):
@@ -74,7 +73,7 @@ def vectorizeSummaries():
 	train = np.zeros((len(ids), 1 + len(vectorizer.get_feature_names())))
 	train[:, 0] = ids
 	train[:, 1:] = vectorizer.transform(summaries).todense()
-	np.savetxt(cfg.databasePath() + '/trainSummaries.csv', train, fmt='%d')
+	np.savetxt(cfg.databasePath() + '/train_text.csv', train, fmt='%d')
 	ids = []
 	summaries = []
 	for id in sets['valid']:
@@ -86,7 +85,7 @@ def vectorizeSummaries():
 	valid = np.zeros((len(ids), 1 + len(vectorizer.get_feature_names())))
 	valid[:, 0] = ids
 	valid[:, 1:] = vectorizer.transform(summaries).todense()
-	np.savetxt(cfg.databasePath() + '/validSummaries.csv', valid, fmt='%d')
+	np.savetxt(cfg.databasePath() + '/valid_text.csv', valid, fmt='%d')
 	ids = []
 	summaries = []
 	for id in sets['test']:
@@ -98,4 +97,4 @@ def vectorizeSummaries():
 	test = np.zeros((len(ids), 1 + len(vectorizer.get_feature_names())))
 	test[:, 0] = ids
 	test[:, 1:] = vectorizer.transform(summaries).todense()
-	np.savetxt(cfg.databasePath() + '/testSummaries.csv', test, fmt='%d')
+	np.savetxt(cfg.databasePath() + '/test_text.csv', test, fmt='%d')
