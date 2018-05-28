@@ -4,7 +4,15 @@ import json
 import os
 import random
 
+import numpy as np
+
 import gamerank.config as cfg
+
+
+def load(set, part):
+	"""Load one of the three parts of the specified set."""
+	filename = cfg.databasePath() + '{}_{}.csv'.format(set, part)
+	return np.loadtxt(filename, dtype=int)
 
 
 def splitDatabase():
