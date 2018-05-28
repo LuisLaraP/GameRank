@@ -6,7 +6,7 @@ from setuptools import find_packages, setup
 setup(
 	name='GameRank',
 	description='A video game ranking system powered by machine learning.',
-	version='0.1.0',
+	version='0.2.0',
 	author='Luis Alejandro Lara Patiño',
 	author_email='luislpatino@gmail.com',
 	license='GPLv3',

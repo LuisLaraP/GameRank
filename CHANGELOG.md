@@ -1,6 +1,14 @@
 # Changelog
 This file documents major changes to the project in each version.
 
+## v0.2.0 - 2018-05-28
+### Added
+  - Function to load database contents.
+
+### Changed
+  - Game metadata is now saved with ids.
+  - When encoding game metadata a separate y-value file is created.
+
 ## v0.1.0 - 2018-05-28
 ### Added
   - Database tools for downloading game information: dl-covers, dl-data
