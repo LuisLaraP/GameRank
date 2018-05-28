@@ -25,6 +25,8 @@ def encodeData():
 		idList = sets[set]
 		data = np.zeros((len(idList), dim2 + 1), dtype=int)
 		data[:, 0] = idList
+		y = np.zeros((len(idList), 2))
+		y[:, 0] = idList
 		for i in range(len(idList)):
 			p = 1
 			gamePath = cfg.databasePath() + '/Games/{}.json'.format(idList[i])
@@ -42,7 +44,9 @@ def encodeData():
 			p += len(genresCode)
 			themes = gameData['themes'] if 'themes' in gameData else []
 			data[i, p:p+len(themesCode)] = encodeMultiLabel(themes, themesCode)
+			y[i, 1] = gameData['aggregated_rating']
 		np.savetxt(cfg.databasePath() + '/{}_data.csv'.format(set), data, fmt='%d')
+		np.savetxt(cfg.databasePath() + '/{}_y.csv'.format(set), y, fmt='%.2f')
 
 
 def encodeMultiLabel(values, code):
