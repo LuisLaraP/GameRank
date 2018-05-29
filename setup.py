@@ -21,6 +21,7 @@ setup(
 	],
 	entry_points={
 		'console_scripts': [
+			'data-reg = gamerank.data_reg:main'
 			'dl-covers = gamerank.database.download:downloadCovers',
 			'dl-data = gamerank.database.download:downloadData',
 			'pp-data = gamerank.database.preprocessing:encodeData',
