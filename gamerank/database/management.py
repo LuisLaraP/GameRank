@@ -11,8 +11,8 @@ import gamerank.config as cfg
 
 def load(set, part):
 	"""Load one of the three parts of the specified set."""
-	filename = cfg.databasePath() + '{}_{}.csv'.format(set, part)
-	return np.loadtxt(filename, dtype=int)
+	filename = cfg.databasePath() + '/{}_{}.csv'.format(set, part)
+	return np.loadtxt(filename)
 
 
 def splitDatabase():
