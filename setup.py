@@ -24,6 +24,7 @@ setup(
 			'data-reg = gamerank.data_reg:main',
 			'dl-covers = gamerank.database.download:downloadCovers',
 			'dl-data = gamerank.database.download:downloadData',
+			'param-lr = gamerank.parameters:learningRate',
 			'pp-data = gamerank.database.preprocessing:encodeData',
 			'pp-text = gamerank.database.preprocessing:vectorizeSummaries',
 			'split-db = gamerank.database.management:splitDatabase'
