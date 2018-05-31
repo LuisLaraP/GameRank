@@ -1,7 +1,7 @@
 # Changelog
 This file documents major changes to the project in each version.
 
-## Unreleased
+## v0.3.0
 ### Added
   - Regression on game metadata.
   - Regression on game summaries.
