@@ -14,10 +14,18 @@ def extractFeatures():
 	featPath = cfg.databasePath() + '/Features'
 	sift = cv2.xfeatures2d.SIFT_create()
 	for file in os.listdir(imgPath):
-		img = cv2.imread(imgPath + file, cv2.IMREAD_GRAYSCALE)
-		_, desc = sift.detectAndCompute(img, None)
 		baseName = file.split('.')[0]
-		np.savetxt(featPath + baseName + '.csv', desc)
+		if os.path.exists(featPath + '/' + baseName + '.csv'):
+			continue
+		img = cv2.imread(imgPath + '/' + file, cv2.IMREAD_GRAYSCALE)
+		if img is None:
+			print(file + ' skipped')
+			continue
+		_, desc = sift.detectAndCompute(img, None)
+		if len(desc.shape) < 2:
+			print(file + ' skipped')
+			continue
+		np.savetxt(featPath + '/' + baseName + '.csv', desc, fmt='%.2f')
 
 
 def vectorizeImages():
