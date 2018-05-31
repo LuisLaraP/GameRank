@@ -8,6 +8,11 @@ import numpy as np
 import gamerank.config as cfg
 
 
+def clusterFeatures():
+	"""Perform clustering on the extracted features."""
+	pass
+
+
 def extractFeatures():
 	"""Extract SIFT features from all the images in the database."""
 	imgPath = cfg.databasePath() + '/Covers'
@@ -33,4 +38,7 @@ def extractFeatures():
 
 def vectorizeImages():
 	"""Transform game covers into a vector suitable for regression."""
+	print('Extracting features')
 	extractFeatures()
+	print('Clustering features')
+	clusterFeatures()
