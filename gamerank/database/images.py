@@ -1,16 +1,31 @@
 """Functions for image preprocessing."""
 
+import json
 import os
 
 import cv2
 import numpy as np
+from sklearn.cluster import MiniBatchKMeans
 
 import gamerank.config as cfg
 
 
 def clusterFeatures():
 	"""Perform clustering on the extracted features."""
-	pass
+	featPath = cfg.databasePath() + '/Features'
+	with open(cfg.databasePath() + '/Sets.json', 'r') as setsFile:
+		idList = json.load(setsFile)['train']
+	arrays = (np.load(featPath + '/' + str(id) + '.npy', allow_pickle=False)
+		for id in idList if os.path.exists(featPath + '/' + str(id) + '.npy'))
+	features = np.vstack(arrays)
+	print(features.shape)
+	print('Loading complete')
+	config = cfg.readConfig()
+	k = config.getint('Images', 'n_clusters')
+	model = MiniBatchKMeans(n_clusters=k, batch_size=50000, verbose=True,
+		compute_labels=False)
+	model.fit(features)
+	np.savetxt(cfg.databasePath() + '/Centers.csv', model.cluster_centers_)
 
 
 def extractFeatures():
