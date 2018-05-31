@@ -18,3 +18,8 @@ def extractFeatures():
 		_, desc = sift.detectAndCompute(img, None)
 		baseName = file.split('.')[0]
 		np.savetxt(featPath + baseName + '.csv', desc)
+
+
+def vectorizeImages():
+	"""Transform game covers into a vector suitable for regression."""
+	extractFeatures()

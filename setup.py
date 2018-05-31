@@ -26,6 +26,7 @@ setup(
 			'dl-data = gamerank.database.download:downloadData',
 			'param-alpha = gamerank.parameters:regularization',
 			'param-lr = gamerank.parameters:learningRate',
+			'pp-covers = gamerank.database.images:vectorizeImages',
 			'pp-data = gamerank.database.preprocessing:encodeData',
 			'pp-text = gamerank.database.preprocessing:vectorizeSummaries',
 			'split-db = gamerank.database.management:splitDatabase',

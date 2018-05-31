@@ -1,6 +1,10 @@
 # Changelog
 This file documents major changes to the project in each version.
 
+## Unreleased
+### Added
+  - SIFT feature extraction from game covers.
+
 ## v0.3.0
 ### Added
   - Regression on game metadata.
