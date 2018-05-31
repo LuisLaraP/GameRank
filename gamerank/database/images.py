@@ -25,7 +25,10 @@ def extractFeatures():
 		if desc is None or len(desc.shape) < 2:
 			print(file + ' skipped')
 			continue
-		np.savetxt(featPath + '/' + baseName + '.csv', desc, fmt='%d')
+		desc = desc / np.sum(desc, axis=1)[:, np.newaxis]
+		desc = np.clip(desc, None, 0.2)
+		desc = desc / np.sum(desc, axis=1)[:, np.newaxis]
+		np.savetxt(featPath + '/' + baseName + '.csv', desc)
 
 
 def vectorizeImages():
