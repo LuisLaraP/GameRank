@@ -51,12 +51,13 @@ def downloadCovers():
 			data = json.load(inFile)
 		try:
 			url = 'https:' + data['cover']['url'].replace('thumb', 'cover_big')
-			coverFile = coverPath + url.split('/')[-1]
-			if os.path.isfile(coverFile):
+			urlFile = coverPath + url.split('/')[-1]
+			localFile = file.split('.')[0] + '.' + urlFile.split('.')[-1]
+			if os.path.isfile(coverPath + '/' + localFile):
 				print('Skipping {}'.format(data['name']))
 			else:
 				response = requests.get(url)
-				with open(coverFile, 'wb') as outFile:
+				with open(coverPath + '/' + localFile, 'wb') as outFile:
 					outFile.write(response.content)
 		except KeyError:
 			print('Skipping {}: no cover.'.format(data['name']))
