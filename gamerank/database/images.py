@@ -6,8 +6,32 @@ import os
 import cv2
 import numpy as np
 from sklearn.cluster import MiniBatchKMeans
+from sklearn.neighbors import NearestNeighbors
 
 import gamerank.config as cfg
+
+
+def buildBagOfWords():
+	"""Transform image features to a BoW vector."""
+	featPath = cfg.databasePath() + '/Features'
+	config = cfg.readConfig()
+	k = config.getint('Images', 'n_clusters')
+	centers = np.loadtxt(cfg.databasePath() + '/Centers.csv')
+	searcher = NearestNeighbors(n_neighbors=1, n_jobs=-1)
+	searcher.fit(centers)
+	with open(cfg.databasePath() + '/Sets.json', 'r') as setsFile:
+		sets = json.load(setsFile)
+	curSet = 'train'
+	idList = [x for x in sets[curSet]
+		if os.path.exists(featPath + '/{}.npy'.format(x))]
+	data = np.zeros((len(idList), k + 1), dtype=int)
+	data[:, 0] = idList
+	for i in range(len(idList)):
+		features = np.load(featPath + '/{}.npy'.format(idList[i]))
+		assignments = searcher.kneighbors(features, return_distance=False)
+		for item in assignments:
+			data[i, item + 1] += 1
+	np.savetxt(cfg.databasePath() + '/train_img.csv', data, fmt='%d')
 
 
 def clusterFeatures():
@@ -56,4 +80,9 @@ def vectorizeImages():
 	print('Extracting features')
 	extractFeatures()
 	print('Clustering features')
-	clusterFeatures()
+	if os.path.exists(cfg.databasePath() + '/Centers.csv'):
+		print('Cluster centers found. Skipping.')
+	else:
+		clusterFeatures()
+	print('Vectorizing')
+	buildBagOfWords()
