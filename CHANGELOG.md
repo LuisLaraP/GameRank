@@ -1,6 +1,11 @@
 # Changelog
 This file documents major changes to the project in each version.
 
+## Unreleased
+### Added
+  - Regression on game metadata.
+  - Regression on game summaries.
+
 ## v0.2.0 - 2018-05-28
 ### Added
   - Function to load database contents.
