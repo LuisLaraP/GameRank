@@ -15,7 +15,7 @@ def extractFeatures():
 	sift = cv2.xfeatures2d.SIFT_create()
 	for file in os.listdir(imgPath):
 		baseName = file.split('.')[0]
-		if os.path.exists(featPath + '/' + baseName + '.csv'):
+		if os.path.exists(featPath + '/' + baseName + '.npy'):
 			continue
 		img = cv2.imread(imgPath + '/' + file, cv2.IMREAD_GRAYSCALE)
 		if img is None:
@@ -28,7 +28,7 @@ def extractFeatures():
 		desc = desc / np.sum(desc, axis=1)[:, np.newaxis]
 		desc = np.clip(desc, None, 0.2)
 		desc = desc / np.sum(desc, axis=1)[:, np.newaxis]
-		np.savetxt(featPath + '/' + baseName + '.csv', desc)
+		np.save(featPath + '/' + baseName, desc, allow_pickle=False)
 
 
 def vectorizeImages():
