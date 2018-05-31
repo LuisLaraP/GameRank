@@ -22,10 +22,10 @@ def extractFeatures():
 			print(file + ' skipped')
 			continue
 		_, desc = sift.detectAndCompute(img, None)
-		if len(desc.shape) < 2:
+		if desc is None or len(desc.shape) < 2:
 			print(file + ' skipped')
 			continue
-		np.savetxt(featPath + '/' + baseName + '.csv', desc, fmt='%.2f')
+		np.savetxt(featPath + '/' + baseName + '.csv', desc, fmt='%d')
 
 
 def vectorizeImages():
