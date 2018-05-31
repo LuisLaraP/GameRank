@@ -1,4 +1,4 @@
-"""Perform linear regression on game metadata."""
+"""Perform linear regression on various sets."""
 
 import numpy as np
 from sklearn.metrics import mean_squared_error
@@ -7,7 +7,7 @@ from sklearn.linear_model import SGDRegressor
 import gamerank.database as db
 
 
-def main():
+def dataReg():
 	"""Script entry point."""
 	xTrain = db.load('train', 'data')[:, 1:].astype(int)
 	yTrain = np.squeeze(db.load('train', 'y')[:, 1:])
@@ -18,7 +18,3 @@ def main():
 	pred = model.predict(xValid)
 	error = np.sqrt(mean_squared_error(yValid, pred))
 	print(error)
-
-
-if __name__ == '__main__':
-	main()
