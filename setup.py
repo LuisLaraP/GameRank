@@ -28,7 +28,8 @@ setup(
 			'param-lr = gamerank.parameters:learningRate',
 			'pp-data = gamerank.database.preprocessing:encodeData',
 			'pp-text = gamerank.database.preprocessing:vectorizeSummaries',
-			'split-db = gamerank.database.management:splitDatabase'
+			'split-db = gamerank.database.management:splitDatabase',
+			'text-reg = gamerank.regression:textReg'
 		]
 	}
 )
