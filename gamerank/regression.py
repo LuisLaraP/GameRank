@@ -1,5 +1,7 @@
 """Perform linear regression on various sets."""
 
+import sys
+
 import numpy as np
 from sklearn.metrics import mean_squared_error
 from sklearn.linear_model import SGDRegressor
@@ -56,3 +58,14 @@ def textReg():
 	pred = model.predict(xValid)
 	error = np.sqrt(mean_squared_error(yValid, pred))
 	print(error)
+
+
+def main():
+	"""Script entry point."""
+	if len(sys.argv) < 2:
+		print('Usage: regression [data|text|covers] <options>')
+		exit()
+
+
+if __name__ == '__main__':
+	main()

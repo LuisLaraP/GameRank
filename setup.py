@@ -21,17 +21,15 @@ setup(
 	],
 	entry_points={
 		'console_scripts': [
-			'data-reg = gamerank.regression:dataReg',
 			'dl-covers = gamerank.database.download:downloadCovers',
 			'dl-data = gamerank.database.download:downloadData',
-			'img-reg = gamerank.regression:imgReg',
 			'param-alpha = gamerank.parameters:regularization',
 			'param-lr = gamerank.parameters:learningRate',
 			'pp-covers = gamerank.database.images:vectorizeImages',
 			'pp-data = gamerank.database.preprocessing:encodeData',
 			'pp-text = gamerank.database.preprocessing:vectorizeSummaries',
-			'split-db = gamerank.database.management:splitDatabase',
-			'text-reg = gamerank.regression:textReg'
+			'regression = gamerank.regression:main',
+			'split-db = gamerank.database.management:splitDatabase'
 		]
 	}
 )
