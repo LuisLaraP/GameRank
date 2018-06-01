@@ -28,25 +28,6 @@ def imgReg():
 	print(error)
 
 
-def textReg():
-	"""Perform regression on text data."""
-	xTrain = db.load('train', 'text').astype(int)
-	yTrain = db.load('train', 'y')
-	xValid = db.load('valid', 'text').astype(int)
-	yValid = db.load('valid', 'y')
-	iTrain = np.isin(yTrain[:, 0], xTrain[:, 0])
-	xTrain = xTrain[:, 1:]
-	yTrain = yTrain[iTrain, 1]
-	iValid = np.isin(yValid[:, 0], xValid[:, 0])
-	xValid = xValid[:, 1:]
-	yValid = yValid[iValid, 1]
-	model = SGDRegressor(penalty='none', max_iter=100)
-	model.fit(xTrain, yTrain)
-	pred = model.predict(xValid)
-	error = np.sqrt(mean_squared_error(yValid, pred))
-	print(error)
-
-
 def main():
 	"""Script entry point."""
 	if len(sys.argv) < 2:
@@ -83,6 +64,24 @@ def dataDataset(args):
 	xTrain = xTrain[:, cols]
 	xValid = xValid[:, cols]
 	return xTrain, yTrain[:, 1], xValid, yValid[:, 1]
+
+
+def textDataset(args):
+	"""Return the dataset of vectorized game summaries."""
+	xTrain = db.load('train', 'data')
+	yTrain = db.load('train', 'y')
+	xValid = db.load('valid', 'data')
+	yValid = db.load('valid', 'y')
+	iTrain = np.isin(yTrain[:, 0], xTrain[:, 0])
+	xTrain = xTrain[:, 1:]
+	yTrain = yTrain[iTrain, 1]
+	iValid = np.isin(yValid[:, 0], xValid[:, 0])
+	xValid = xValid[:, 1:]
+	yValid = yValid[iValid, 1]
+	if 'binary' in args:
+		xTrain = np.where(xTrain > 0, 1, 0)
+		xValid = np.where(xValid > 0, 1, 0)
+	return xTrain, yTrain, xValid, yValid
 
 
 if __name__ == '__main__':
