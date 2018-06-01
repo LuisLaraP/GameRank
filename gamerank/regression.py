@@ -65,6 +65,15 @@ def main():
 	if len(sys.argv) < 2:
 		print('Usage: regression [data|text|covers] <options>')
 		exit()
+	sets = globals()[sys.argv[1] + 'Dataset'](sys.argv[1:])
+	xTrain, yTrain, xValid, yValid = sets
+	model = SGDRegressor(max_iter=100)
+	model.fit(xTrain, yTrain)
+	pTrain = model.predict(xTrain)
+	eTrain = np.sqrt(mean_squared_error(yTrain, pTrain))
+	pValid = model.predict(xValid)
+	eValid = np.sqrt(mean_squared_error(yValid, pValid))
+	print('Train error: {}\tValid error: {}'.format(eTrain, eValid))
 
 
 if __name__ == '__main__':
