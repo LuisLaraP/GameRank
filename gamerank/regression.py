@@ -76,5 +76,14 @@ def main():
 	print('Train error: {}\tValid error: {}'.format(eTrain, eValid))
 
 
+def dataDataset(args):
+	"""Return the dataset of game metadata."""
+	xTrain = db.load('train', 'data')[:, 1:]
+	yTrain = db.load('train', 'y')
+	xValid = db.load('valid', 'data')[:, 1:]
+	yValid = db.load('valid', 'y')
+	return xTrain, yTrain[:, 1], xValid, yValid[:, 1]
+
+
 if __name__ == '__main__':
 	main()
