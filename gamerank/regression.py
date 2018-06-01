@@ -69,6 +69,19 @@ def dataDataset(args):
 	yTrain = db.load('train', 'y')
 	xValid = db.load('valid', 'data')[:, 1:]
 	yValid = db.load('valid', 'y')
+	if len(args) == 1:
+		return xTrain, yTrain[:, 1], xValid, yValid[:, 1]
+	cols = np.zeros(xTrain.shape[1], dtype=bool)
+	if 'esrb' in args:
+		cols[0:7] = True
+	if 'game_modes' in args:
+		cols[7:12] = True
+	if 'genres' in args:
+		cols[12:32] = True
+	if 'themes' in args:
+		cols[32:53] = True
+	xTrain = xTrain[:, cols]
+	xValid = xValid[:, cols]
 	return xTrain, yTrain[:, 1], xValid, yValid[:, 1]
 
 
