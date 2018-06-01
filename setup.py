@@ -24,6 +24,7 @@ setup(
 			'data-reg = gamerank.regression:dataReg',
 			'dl-covers = gamerank.database.download:downloadCovers',
 			'dl-data = gamerank.database.download:downloadData',
+			'img-reg = gamerank.regression:imgReg',
 			'param-alpha = gamerank.parameters:regularization',
 			'param-lr = gamerank.parameters:learningRate',
 			'pp-covers = gamerank.database.images:vectorizeImages',

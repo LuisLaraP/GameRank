@@ -20,6 +20,11 @@ def dataReg():
 	print(error)
 
 
+def imgReg():
+	"""Perform regression on image data."""
+	pass
+
+
 def textReg():
 	"""Preform regression on text data."""
 	xTrain = db.load('train', 'text').astype(int)

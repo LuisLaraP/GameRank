@@ -4,8 +4,11 @@ This file documents major changes to the project in each version.
 ## Unreleased
 ### Added
   - SIFT feature extraction from game covers.
+  - Vectorization of SIFT features to Bag of Words model.
+  - Regression on game covers.
 
-## v0.3.0
+
+## v0.3.0 - 2018-05-31
 ### Added
   - Regression on game metadata.
   - Regression on game summaries.
