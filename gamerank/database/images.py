@@ -27,14 +27,15 @@ def buildBagOfWords():
 			continue
 		idList = [x for x in sets[curSet]
 			if os.path.exists(featPath + '/{}.npy'.format(x))]
-		data = np.zeros((len(idList), k + 1), dtype=int)
+		data = np.zeros((len(idList), k + 1))
 		data[:, 0] = idList
 		for i in range(len(idList)):
 			features = np.load(featPath + '/{}.npy'.format(idList[i]))
 			assignments = searcher.kneighbors(features, return_distance=False)
 			for item in assignments:
 				data[i, item + 1] += 1
-		np.savetxt(cfg.databasePath() + '/{}_img.csv'.format(curSet), data, fmt='%d')
+		data[:, 1:] = data[:, 1:] / np.sum(data[:, 1:], axis=1)[:, np.newaxis]
+		np.savetxt(cfg.databasePath() + '/{}_img.csv'.format(curSet), data)
 
 
 def clusterFeatures():
