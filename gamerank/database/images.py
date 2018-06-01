@@ -47,21 +47,21 @@ def computeHistograms():
 	with open(cfg.databasePath() + '/Sets.json', 'r') as setsFile:
 		sets = json.load(setsFile)
 	coverIds = [int(x.split('.')[0]) for x in os.listdir(imgPath)]
-	curSet = 'train'
-	idList = [x for x in sets[curSet] if x in coverIds]
-	data = np.zeros((len(idList), hBins * sBins + 1))
-	data[:, 0] = idList
-	for i in range(len(idList)):
-		coverFilename = imgPath + '/{}.jpg'.format(idList[i])
-		img = cv2.imread(coverFilename, cv2.IMREAD_COLOR)
-		img = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
-		for j in range(sBins):
-			minS = j * 256 / sBins
-			maxS = (j + 1) * 256 / sBins
-			relPix = img[np.logical_and(img[:, :, 1] > minS, img[:, :, 1] < maxS)]
-			data[i, hBins*j:hBins*(j+1)], _ = np.histogram(relPix[:, 0], bins=hBins)
-	data[:, 1:] = data[:, 1:] / np.sum(data[:, 1:], axis=1)[:, np.newaxis]
-	np.savetxt(cfg.databasePath() + '/{}_hist.csv'.format(curSet), data)
+	for curSet in sets:
+		idList = [x for x in sets[curSet] if x in coverIds]
+		data = np.zeros((len(idList), hBins * sBins + 1))
+		data[:, 0] = idList
+		for i in range(len(idList)):
+			coverFilename = imgPath + '/{}.jpg'.format(idList[i])
+			img = cv2.imread(coverFilename, cv2.IMREAD_COLOR)
+			img = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
+			for j in range(sBins):
+				minS = j * 256 / sBins
+				maxS = (j + 1) * 256 / sBins
+				relPix = img[np.logical_and(img[:, :, 1] > minS, img[:, :, 1] < maxS)]
+				data[i, hBins*j:hBins*(j+1)], _ = np.histogram(relPix[:, 0], bins=hBins)
+		data[:, 1:] = data[:, 1:] / np.sum(data[:, 1:], axis=1)[:, np.newaxis]
+		np.savetxt(cfg.databasePath() + '/{}_hist.csv'.format(curSet), data)
 
 
 def clusterFeatures():
