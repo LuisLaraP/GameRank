@@ -60,7 +60,7 @@ def main():
 	eTrain = np.sqrt(mean_squared_error(yTrain, pTrain))
 	pValid = model.predict(xValid)
 	eValid = np.sqrt(mean_squared_error(yValid, pValid))
-	print('Train error: {}\tValid error: {}'.format(eTrain, eValid))
+	print('Train error: {:.2f}\tValid error: {:.2f}'.format(eTrain, eValid))
 
 
 def dataDataset(args):
