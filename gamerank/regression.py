@@ -9,25 +9,6 @@ from sklearn.linear_model import SGDRegressor
 import gamerank.database as db
 
 
-def imgReg():
-	"""Perform regression on image data."""
-	xTrain = db.load('train', 'img').astype(int)
-	yTrain = db.load('train', 'y')
-	xValid = db.load('valid', 'img').astype(int)
-	yValid = db.load('valid', 'y')
-	iTrain = np.isin(yTrain[:, 0], xTrain[:, 0])
-	xTrain = xTrain[:, 1:]
-	yTrain = yTrain[iTrain, 1]
-	iValid = np.isin(yValid[:, 0], xValid[:, 0])
-	xValid = xValid[:, 1:]
-	yValid = yValid[iValid, 1]
-	model = SGDRegressor(penalty='none', max_iter=100)
-	model.fit(xTrain, yTrain)
-	pred = model.predict(xValid)
-	error = np.sqrt(mean_squared_error(yValid, pred))
-	print(error)
-
-
 def main():
 	"""Script entry point."""
 	if len(sys.argv) < 2:
@@ -81,6 +62,21 @@ def textDataset(args):
 	if 'binary' in args:
 		xTrain = np.where(xTrain > 0, 1, 0)
 		xValid = np.where(xValid > 0, 1, 0)
+	return xTrain, yTrain, xValid, yValid
+
+
+def coversDataset(args):
+	"""Return the dataset of vectorized game covers."""
+	xTrain = db.load('train', 'img')
+	yTrain = db.load('train', 'y')
+	xValid = db.load('valid', 'img')
+	yValid = db.load('valid', 'y')
+	iTrain = np.isin(yTrain[:, 0], xTrain[:, 0])
+	xTrain = xTrain[:, 1:]
+	yTrain = yTrain[iTrain, 1]
+	iValid = np.isin(yValid[:, 0], xValid[:, 0])
+	xValid = xValid[:, 1:]
+	yValid = yValid[iValid, 1]
 	return xTrain, yTrain, xValid, yValid
 
 
