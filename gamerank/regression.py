@@ -73,6 +73,9 @@ def coversDataset(args):
 	hValid = db.load('valid', 'hist')
 	xValid = db.load('valid', 'img')
 	yValid = db.load('valid', 'y')
+	if 'binary' in args:
+		xTrain[:, 1:] = np.where(xTrain[:, 1:] > 0, 1, 0)
+		xValid[:, 1:] = np.where(xValid[:, 1:] > 0, 1, 0)
 	iTrain = [x for x in yTrain[:, 0] if x in xTrain[:, 0] and x in hTrain[:, 0]]
 	xTrain = np.hstack((
 		hTrain[np.isin(hTrain[:, 0], iTrain), 1:],
