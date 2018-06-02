@@ -62,7 +62,8 @@ def computeHistograms():
 				minS = j * 256 / sBins
 				maxS = (j + 1) * 256 / sBins
 				relPix = img[np.logical_and(img[:, :, 1] > minS, img[:, :, 1] < maxS)]
-				data[i, hBins*j:hBins*(j+1)], _ = np.histogram(relPix[:, 0], bins=hBins)
+				data[i, 1+hBins*j:1+hBins*(j+1)], _ = \
+					np.histogram(relPix[:, 0], bins=hBins)
 		data[:, 1:] = data[:, 1:] / np.sum(data[:, 1:], axis=1)[:, np.newaxis]
 		np.savetxt(cfg.databasePath() + '/{}_hist.csv'.format(curSet), data)
 
