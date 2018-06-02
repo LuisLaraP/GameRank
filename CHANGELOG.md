@@ -1,6 +1,10 @@
 # Changelog
 This file documents major changes to the project in each version.
 
+## Unreleased
+### Added
+  - Tool to download Nintendo Switch games.
+
 ## v1.0.0 - 2018-06-02
 ### Added
   - SIFT feature extraction from game covers.

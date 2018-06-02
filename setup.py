@@ -23,6 +23,7 @@ setup(
 		'console_scripts': [
 			'dl-covers = gamerank.database.download:downloadCovers',
 			'dl-data = gamerank.database.download:downloadData',
+			'dl-switch = gamerank.database.download:downloadSwitch',
 			'param-alpha = gamerank.parameters:regularization',
 			'param-lr = gamerank.parameters:learningRate',
 			'pp-covers = gamerank.database.images:vectorizeImages',

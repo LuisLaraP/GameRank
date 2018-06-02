@@ -40,6 +40,11 @@ def downloadData():
 					json.dump(game, outFile, indent='\t')
 
 
+def downloadSwitch():
+	"""Download games for the Nintendo Switch platform."""
+	pass
+
+
 def downloadCovers():
 	"""Download covers for the games present in the database."""
 	coverPath = cfg.databasePath() + '/Covers/'
