@@ -54,6 +54,9 @@ def computeHistograms():
 		for i in range(len(idList)):
 			coverFilename = imgPath + '/{}.jpg'.format(idList[i])
 			img = cv2.imread(coverFilename, cv2.IMREAD_COLOR)
+			if img is None or img.shape[2] != 3:
+				print('Skipping ' + str(idList[i]))
+				continue
 			img = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
 			for j in range(sBins):
 				minS = j * 256 / sBins
