@@ -65,6 +65,7 @@ def computeHistograms():
 				data[i, 1+hBins*j:1+hBins*(j+1)], _ = \
 					np.histogram(relPix[:, 0], bins=hBins)
 		data[:, 1:] = data[:, 1:] / np.sum(data[:, 1:], axis=1)[:, np.newaxis]
+		data = data[~np.isnan(data).any(axis=1)]
 		np.savetxt(cfg.databasePath() + '/{}_hist.csv'.format(curSet), data)
 
 

@@ -73,12 +73,18 @@ def coversDataset(args):
 	hValid = db.load('valid', 'hist')
 	xValid = db.load('valid', 'img')
 	yValid = db.load('valid', 'y')
-	iTrain = np.isin(yTrain[:, 0], hTrain[:, 0])
-	xTrain = np.hstack((hTrain[:, 1:], xTrain[iTrain, 1:]))
-	yTrain = yTrain[iTrain, 1]
-	iValid = np.isin(yValid[:, 0], hValid[:, 0])
-	xValid = np.hstack((hValid[:, 1:], xValid[iValid, 1:]))
-	yValid = yValid[iValid, 1]
+	iTrain = [x for x in yTrain[:, 0] if x in xTrain[:, 0] and x in hTrain[:, 0]]
+	xTrain = np.hstack((
+		hTrain[np.isin(hTrain[:, 0], iTrain), 1:],
+		xTrain[np.isin(xTrain[:, 0], iTrain), 1:]
+	))
+	yTrain = yTrain[np.isin(yTrain[:, 0], iTrain), 1]
+	iValid = [x for x in yValid[:, 0] if x in xValid[:, 0] and x in hValid[:, 0]]
+	xValid = np.hstack((
+		hValid[np.isin(hValid[:, 0], iValid), 1:],
+		xValid[np.isin(xValid[:, 0], iValid), 1:]
+	))
+	yValid = yValid[np.isin(yValid[:, 0], iValid), 1]
 	return xTrain, yTrain, xValid, yValid
 
 
