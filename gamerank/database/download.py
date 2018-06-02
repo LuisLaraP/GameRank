@@ -42,7 +42,31 @@ def downloadData():
 
 def downloadSwitch():
 	"""Download games for the Nintendo Switch platform."""
-	pass
+	if not os.path.exists(cfg.databasePath() + '/Games'):
+		os.makedirs(cfg.databasePath() + '/Games')
+	config = cfg.readConfig()
+	fields = config['Database']['fields'].split(',')
+	api = igdb(config['Database']['api_key'])
+	res = api.games({
+		'fields': fields,
+		'filters': {
+			'[release_dates.platform][any]': 130
+		},
+		'scroll': 1,
+		'limit': 50
+	})
+	for game in res.body:
+		filename = cfg.databasePath() + '/Games/{}.json'.format(game['id'])
+		with open(filename, 'w') as outFile:
+			json.dump(game, outFile, indent='\t')
+	nPages = round(int(res.headers['X-Count']) / 50)
+	for _ in range(nPages):
+		scrolled = api.scroll(res)
+		if type(scrolled.body) is list:
+			for game in scrolled.body:
+				filename = cfg.databasePath() + '/Games/{}.json'.format(game['id'])
+				with open(filename, 'w') as outFile:
+					json.dump(game, outFile, indent='\t')
 
 
 def downloadCovers():
