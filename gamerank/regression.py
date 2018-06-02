@@ -67,15 +67,17 @@ def textDataset(args):
 
 def coversDataset(args):
 	"""Return the dataset of vectorized game covers."""
+	hTrain = db.load('train', 'hist')
 	xTrain = db.load('train', 'img')
 	yTrain = db.load('train', 'y')
+	hValid = db.load('valid', 'hist')
 	xValid = db.load('valid', 'img')
 	yValid = db.load('valid', 'y')
-	iTrain = np.isin(yTrain[:, 0], xTrain[:, 0])
-	xTrain = xTrain[:, 1:]
+	iTrain = np.isin(yTrain[:, 0], hTrain[:, 0])
+	xTrain = np.hstack((hTrain[:, 1:], xTrain[iTrain, 1:]))
 	yTrain = yTrain[iTrain, 1]
-	iValid = np.isin(yValid[:, 0], xValid[:, 0])
-	xValid = xValid[:, 1:]
+	iValid = np.isin(yValid[:, 0], hValid[:, 0])
+	xValid = np.hstack((hValid[:, 1:], xValid[iValid, 1:]))
 	yValid = yValid[iValid, 1]
 	return xTrain, yTrain, xValid, yValid
 
