@@ -1,7 +1,7 @@
 # Changelog
 This file documents major changes to the project in each version.
 
-## Unreleased
+## v1.1.0 - 2018-06-02
 ### Added
   - Tool to download Nintendo Switch games.
   - Command for performing ranking of Switch games.
