@@ -29,6 +29,7 @@ setup(
 			'pp-covers = gamerank.database.images:vectorizeImages',
 			'pp-data = gamerank.database.preprocessing:encodeData',
 			'pp-text = gamerank.database.preprocessing:vectorizeSummaries',
+			'ranking = gamerank.rank:main',
 			'regression = gamerank.regression:main',
 			'split-db = gamerank.database.management:splitDatabase'
 		]
