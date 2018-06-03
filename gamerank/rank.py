@@ -20,6 +20,19 @@ def main():
 	xTrain = db.load('rank_train', 'data')
 	yTrain = db.load('rank_train', 'y')
 	xTest = db.load('rank_test', 'data')
+	for set in ['text', 'hist', 'img']:
+		nTrain = db.load('rank_train', set)
+		nTest = db.load('rank_test', set)
+		iTrain = [x for x in xTrain[:, 0] if x in nTrain[:, 0]]
+		xTrain = np.hstack((
+			xTrain[np.isin(xTrain[:, 0], iTrain), :],
+			nTrain[np.isin(nTrain[:, 0], iTrain), 1:]
+		))
+		iTest = [x for x in xTest[:, 0] if x in nTest[:, 0]]
+		xTest = np.hstack((
+			xTest[np.isin(xTest[:, 0], iTest), :],
+			nTest[np.isin(nTest[:, 0], iTest), 1:]
+		))
 	gamesPath = cfg.databasePath() + '/Games/{}.json'
 	names = []
 	for i in range(xTest.shape[0]):
