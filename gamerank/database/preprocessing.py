@@ -116,3 +116,15 @@ def vectorizeSummaries():
 	test[:, 0] = ids
 	test[:, 1:] = vectorizer.transform(summaries).todense()
 	np.savetxt(cfg.databasePath() + '/rank_train_text.csv', test, fmt='%d')
+	ids = []
+	summaries = []
+	for id in sets['rank_test']:
+		with open(cfg.databasePath() + '/Games/{}.json'.format(id), 'r') as inFile:
+			gameData = json.load(inFile)
+		if 'summary' in gameData:
+			ids.append(id)
+			summaries.append(gameData['summary'])
+	test = np.zeros((len(ids), 1 + len(vectorizer.get_feature_names())))
+	test[:, 0] = ids
+	test[:, 1:] = vectorizer.transform(summaries).todense()
+	np.savetxt(cfg.databasePath() + '/rank_test_text.csv', test, fmt='%d')
