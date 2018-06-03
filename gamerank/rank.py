@@ -1,6 +1,7 @@
 """Rank Nintendo Switch games based on past generation games."""
 
 import json
+import sys
 
 import numpy as np
 from sklearn.metrics import mean_squared_error
@@ -12,6 +13,10 @@ import gamerank.database as db
 
 def main():
 	"""Script entry point."""
+	if len(sys.argv) == 2:
+		n = int(sys.argv[1])
+	else:
+		n = 10
 	xTrain = db.load('rank_train', 'data')
 	yTrain = db.load('rank_train', 'y')
 	xTest = db.load('rank_test', 'data')
@@ -27,7 +32,7 @@ def main():
 	print('Training error: {}'.format(eTrain))
 	pTest = model.predict(xTest[:, 1:])
 	sortIdx = np.argsort(pTest)
-	for i in range(1, 11):
+	for i in range(1, n + 1):
 		idx = sortIdx[-i]
 		print('{:.2f}\t{}'.format(pTest[idx], names[idx]))
 
