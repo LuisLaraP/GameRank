@@ -88,6 +88,13 @@ def coversDataset(args):
 		xValid[np.isin(xValid[:, 0], iValid), 1:]
 	))
 	yValid = yValid[np.isin(yValid[:, 0], iValid), 1]
+	cols = np.zeros(xTrain.shape[1], dtype=bool)
+	if 'hist' in args:
+		cols[:hTrain.shape[1]] = True
+	if 'bow' in args:
+		cols[hTrain.shape[1]:] = True
+	if len(args) == 0 or args == ['binary']:
+		cols[:] = True
 	return xTrain, yTrain, xValid, yValid
 
 
