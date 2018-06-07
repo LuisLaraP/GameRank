@@ -1,6 +1,7 @@
 """Functions for data preprocessing."""
 
 import json
+import sys
 
 import numpy as np
 from sklearn.feature_extraction.text import CountVectorizer
@@ -10,6 +11,8 @@ import gamerank.config as cfg
 
 def encodeData():
 	"""Encode game metadata."""
+	if len(sys.argv) < 2:
+		print('Usage: pp-data <sets>')
 	config = cfg.readConfig()
 	esrbCode = config.get('Preprocessing', 'esrb').split(',')
 	modesCode = config.get('Preprocessing', 'game_modes').split(',')
@@ -21,7 +24,7 @@ def encodeData():
 	dim2 = sum([len(esrbCode), len(modesCode), len(genresCode), len(themesCode)])
 	with open(cfg.databasePath() + '/Sets.json', 'r') as setsFile:
 		sets = json.load(setsFile)
-	for set in sets:
+	for set in sys.argv[1:]:
 		idList = sets[set]
 		data = np.zeros((len(idList), dim2 + 1), dtype=int)
 		data[:, 0] = idList
